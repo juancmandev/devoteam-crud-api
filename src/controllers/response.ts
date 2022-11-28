@@ -16,3 +16,16 @@ export const getResponse = async (
     message: 'Hello!',
   });
 };
+
+export const setResponse = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const body = await req.body;
+  console.log(body);
+
+  return res.status(200).json({
+    message: 'Data received!',
+  });
+};
