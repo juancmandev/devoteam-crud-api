@@ -10,9 +10,9 @@ export const uploadFileToCloudStorage = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { fileBase64 } = req.body;
+  const { fileBase64, fileName, fileType } = req.body;
 
-  const file = storage.bucket(BUCKET_NAME).file('gcs.png');
+  const file = storage.bucket(BUCKET_NAME).file(fileName);
   const fileOptions = {
     resumable: false,
     metadata: {
@@ -25,4 +25,8 @@ export const uploadFileToCloudStorage = async (
   const fileBuffer = Buffer.from(base64EncodedString, 'base64');
 
   await file.save(fileBuffer, fileOptions);
+
+  return res.status(200).json({
+    message: 'File uploaded!',
+  });
 };
